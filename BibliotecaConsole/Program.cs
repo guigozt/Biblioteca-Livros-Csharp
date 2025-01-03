@@ -17,7 +17,7 @@ namespace BibliotecaConsole
                 Console.WriteLine("=== BIBLIOTECA DE LIVROS - LOGIN ===");
                 Console.WriteLine("\nDigite [1] para Entrar");
                 Console.WriteLine("\nDigite [2] para Cadastrar");
-                Console.WriteLine("\nInforme sua escolha: ");
+                Console.Write("\nInforme sua escolha: ");
 
                 string escolha = Console.ReadLine();
 
@@ -149,11 +149,67 @@ namespace BibliotecaConsole
 
         private static async Task MostrarTelaPrincipal()
         {
-            // Aqui é onde você exibe a tela principal após o login
             Console.Clear();
-            Console.WriteLine("=== BIBLIOTECA DE LIVROS - TELA PRINCIPAL ===");
-            Console.WriteLine("Bem-vindo ao sistema de biblioteca!");
-            // Aqui você pode colocar mais funcionalidades da tela principal
+
+            int opcao;
+
+            do
+            {
+                Console.WriteLine("=== BIBLIOTECA DE LIVROS - TELA PRINCIPAL ===");
+                Console.WriteLine("\nDigite [1] para Adicionar livro");
+                Console.WriteLine("\nDigite [2] para Listar livros");
+                Console.WriteLine("\nDigite [3] para Atualizar livro");
+                Console.WriteLine("\nDigite [4] para Excluir livro");
+                Console.WriteLine("\nDigite [0] para Sair");
+                Console.Write("\nEscolha uma opção: ");
+                opcao = int.Parse(Console.ReadLine());
+
+                switch (opcao)
+                {
+                    case 1:
+                        AdicionarLivro();
+                        break;
+                    case 2:
+                        ListarLivros();
+                        break;
+                    case 3:
+                        AtualizarLivro();
+                        break;
+                    case 4:
+                        ExcluirLivro();
+                        break;
+                    case 0:
+                        Console.WriteLine("\nSaindo do programa...");
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida!");
+                        break;
+                }
+            } while (opcao != 0);
+        }
+
+        private static void AdicionarLivro()
+        {
+            Console.Clear();
+            Console.WriteLine("=== ADICIONAR LIVRO ===");
+        }
+
+        private static void ListarLivros()
+        {
+            Console.Clear();
+            Console.WriteLine("=== LISTA DE LIVROS ===");
+        }
+
+        private static void AtualizarLivro()
+        {
+            Console.Clear();
+            Console.WriteLine("=== ATUALIZAR LIVRO ===");
+        }
+
+        private static void ExcluirLivro()
+        {
+            Console.Clear();
+            Console.WriteLine("=== EXCLUIR LIVRO ===");
         }
     }
 }
