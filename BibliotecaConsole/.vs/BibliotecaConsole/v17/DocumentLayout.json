@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|solutionrelative:Livro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|solutionrelative:Usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|solutionrelative:Livro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{014FF962-9E30-4040-B0CF-EF90D207D3AA}|BibliotecaConsole.csproj|C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,7 +38,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Livro.cs",
               "DocumentMoniker": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs",
               "RelativeDocumentMoniker": "Livro.cs",
@@ -51,7 +51,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Usuario.cs",
               "RelativeDocumentMoniker": "Usuario.cs",
@@ -59,7 +59,8 @@
               "RelativeToolTip": "Usuario.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T17:57:55.438Z"
+              "WhenOpened": "2024-12-27T17:57:55.438Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -71,7 +72,8 @@
               "RelativeToolTip": "Login.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T17:56:21.054Z"
+              "WhenOpened": "2024-12-27T17:56:21.054Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -81,7 +83,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwAMBAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAwBAAAAAAAAAAAYwBcBAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-27T17:55:51.641Z",
               "EditorCaption": ""

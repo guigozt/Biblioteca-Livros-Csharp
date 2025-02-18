@@ -47,7 +47,7 @@ namespace BibliotecaConsole
         private static async Task RealizarLogin()
         {
             Console.Clear();
-            Console.WriteLine("=== TELA DE LOGIN ===");
+            Console.WriteLine("\n=== TELA DE LOGIN ===");
 
             Console.Write("\nDigite seu email: ");
             string emailLogin = Console.ReadLine();
@@ -156,6 +156,7 @@ namespace BibliotecaConsole
 
             do
             {
+                Console.Clear();
                 Console.WriteLine("=== BIBLIOTECA DE LIVROS - TELA PRINCIPAL ===");
                 Console.WriteLine("\nDigite [1] para Adicionar livro");
                 Console.WriteLine("\nDigite [2] para Listar livros");
@@ -168,15 +169,19 @@ namespace BibliotecaConsole
                 switch (opcao)
                 {
                     case 1:
+                        Console.Clear();
                         await AdicionarLivro(); // Aguarda a conclusão da operação
                         break;
                     case 2:
+                        Console.Clear();
                         await ListarLivros(); // Aguarda a conclusão da operação
                         break;
                     case 3:
+                        Console.Clear();
                         await AtualizarLivro(); // Aguarda a conclusão da operação
                         break;
                     case 4:
+                        Console.Clear();
                         await ExcluirLivro(); // Aguarda a conclusão da operação
                         break;
                     case 0:
@@ -193,13 +198,13 @@ namespace BibliotecaConsole
         {
             Console.WriteLine("=== ADICIONAR LIVRO ===");
 
-            Console.Write("Digite o nome do livro: ");
+            Console.Write("\nDigite o nome do livro: ");
             string nomeLivro = Console.ReadLine();
 
-            Console.Write("Digite o nome do autor(a) do livro: ");
+            Console.Write("\nDigite o nome do autor(a) do livro: ");
             string nomeAutor = Console.ReadLine();
 
-            Console.Write("Digite o ano de leitura: ");
+            Console.Write("\nDigite o ano de leitura: ");
             if(!int.TryParse(Console.ReadLine(), out int anoLeitura))
             {
                 Console.WriteLine("\nAno inválido!");
@@ -207,7 +212,7 @@ namespace BibliotecaConsole
                 return;
             }
 
-            Console.Write("Informe a sua avaliação deste livro (de 0 a 5): ");
+            Console.Write("\nInforme a sua avaliação deste livro (de 0 a 5): ");
             if(!int.TryParse(Console.ReadLine(), out int avaliacaoLivro) || avaliacaoLivro < 0 || avaliacaoLivro > 5){
                 Console.WriteLine("\nFormato de avaliação inválido!");
                 await Task.Delay(1000);
@@ -250,6 +255,41 @@ namespace BibliotecaConsole
         private static async Task ListarLivros()
         {
             Console.WriteLine("=== LISTA DE LIVROS ===");
+
+            using (var connection = await ObterConexaoAsync())
+            {
+                try
+                {
+                    string query = "SELECT nome_livro, autor_livro, ano_leitura, avaliacao_livro FROM Livro WHERE id_usuario = @usuarioId";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    string nomeLivro = reader.GetString(0);
+                                    string nomeAutor = reader.GetString(1);
+                                    int anoLeitura = reader.GetInt32(2);
+                                    int avaliacaoLivro = reader.GetInt32(3);
+
+                                    Console.Write($"\nLivro: {nomeLivro} \nAutor: {nomeAutor} \nAno de leitura: {anoLeitura} \nAvaliação: {avaliacaoLivro} \n");
+                                    Console.Write("--------------------------------------------");
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nErro ao listar livros: {ex.Message}");
+                }
+            }
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey(); // Aguarda o usuário pressionar uma tecla
         }
 
         private static async Task AtualizarLivro()
