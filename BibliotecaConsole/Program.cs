@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
@@ -167,16 +168,16 @@ namespace BibliotecaConsole
                 switch (opcao)
                 {
                     case 1:
-                        AdicionarLivro();
+                        await AdicionarLivro(); // Aguarda a conclusão da operação
                         break;
                     case 2:
-                        ListarLivros();
+                        await ListarLivros(); // Aguarda a conclusão da operação
                         break;
                     case 3:
-                        AtualizarLivro();
+                        await AtualizarLivro(); // Aguarda a conclusão da operação
                         break;
                     case 4:
-                        ExcluirLivro();
+                        await ExcluirLivro(); // Aguarda a conclusão da operação
                         break;
                     case 0:
                         Console.WriteLine("\nSaindo do programa...");
@@ -188,27 +189,76 @@ namespace BibliotecaConsole
             } while (opcao != 0);
         }
 
-        private static void AdicionarLivro()
+        private static async Task AdicionarLivro()
         {
-            Console.Clear();
             Console.WriteLine("=== ADICIONAR LIVRO ===");
+
+            Console.Write("Digite o nome do livro: ");
+            string nomeLivro = Console.ReadLine();
+
+            Console.Write("Digite o nome do autor(a) do livro: ");
+            string nomeAutor = Console.ReadLine();
+
+            Console.Write("Digite o ano de leitura: ");
+            if(!int.TryParse(Console.ReadLine(), out int anoLeitura))
+            {
+                Console.WriteLine("\nAno inválido!");
+                await Task.Delay(1000);
+                return;
+            }
+
+            Console.Write("Informe a sua avaliação deste livro (de 0 a 5): ");
+            if(!int.TryParse(Console.ReadLine(), out int avaliacaoLivro) || avaliacaoLivro < 0 || avaliacaoLivro > 5){
+                Console.WriteLine("\nFormato de avaliação inválido!");
+                await Task.Delay(1000);
+                return;
+            }
+
+            using (var connection = await ObterConexaoAsync())
+            {
+                try
+                {
+                    string query = "INSERT INTO Livro (nome_livro, autor_livro, ano_leitura, avaliacao_livro, id_usuario) VALUES (@NomeLivro, @NomeAutor, @AnoLeitura, @AvaliacaoLivro, @UsuarioId)";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@NomeLivro", nomeLivro);
+                        command.Parameters.AddWithValue("@NomeAutor", nomeAutor);
+                        command.Parameters.AddWithValue("@AnoLeitura", anoLeitura);
+                        command.Parameters.AddWithValue("@AvaliacaoLivro", avaliacaoLivro);
+                        command.Parameters.AddWithValue("@UsuarioId", usuarioId); // Usa o id do usuário logado
+
+                        int result = await command.ExecuteNonQueryAsync();
+                        if (result > 0)
+                        {
+                            Console.WriteLine("\nLivro adicionado com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nErro ao adicionar o livro.");
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nErro ao adicionar livro: {ex.Message}");
+                }
+            }
+            await Task.Delay(1000);
         }
 
-        private static void ListarLivros()
+        private static async Task ListarLivros()
         {
-            Console.Clear();
             Console.WriteLine("=== LISTA DE LIVROS ===");
         }
 
-        private static void AtualizarLivro()
+        private static async Task AtualizarLivro()
         {
-            Console.Clear();
             Console.WriteLine("=== ATUALIZAR LIVRO ===");
         }
 
-        private static void ExcluirLivro()
+        private static async Task ExcluirLivro()
         {
-            Console.Clear();
             Console.WriteLine("=== EXCLUIR LIVRO ===");
         }
     }

@@ -16,9 +16,10 @@ CREATE TABLE Livro (
     nome_livro VARCHAR(100) NOT NULL,
     autor_livro VARCHAR(100) NOT NULL,
     ano_leitura YEAR NOT NULL,                   -- Tipo específico para ano
-    avaliacao_livro INT(1) NOT NULL CHECK (avaliacao_livro BETWEEN 1 AND 5),  -- Avaliação entre 1 e 5
+    avaliacao_livro INT(1) NOT NULL CHECK (avaliacao_livro BETWEEN 0 AND 5),  -- Avaliação entre 1 e 5
     id_usuario INT,  -- Referência ao ID do usuário
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE -- Exclui os livros quando o usuário é excluído
 );
 
 select * from Usuario;
+select * from Livro;
