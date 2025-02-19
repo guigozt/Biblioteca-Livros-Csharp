@@ -61,13 +61,13 @@ namespace BibliotecaConsole
             {
                 Console.WriteLine("\nLogin realizado com sucesso!");
                 usuarioId = usuarioIdTemp.Value;
-                await Task.Delay(2000); // Aguarda 2 segundos
-                await MostrarTelaPrincipal(); // Exibe a tela principal
+                await Task.Delay(1000); 
+                await MostrarTelaPrincipal(); 
             }
             else
             {
                 Console.WriteLine("\nEmail ou senha incorretos!");
-                await Task.Delay(2000); // Aguarda 2 segundos antes de voltar ao menu principal
+                await Task.Delay(1000); 
             }
         }
 
@@ -170,19 +170,19 @@ namespace BibliotecaConsole
                 {
                     case 1:
                         Console.Clear();
-                        await AdicionarLivro(); // Aguarda a conclusão da operação
+                        await AdicionarLivro(); 
                         break;
                     case 2:
                         Console.Clear();
-                        await ListarLivros(); // Aguarda a conclusão da operação
+                        await ListarLivros(); 
                         break;
                     case 3:
                         Console.Clear();
-                        await AtualizarLivro(); // Aguarda a conclusão da operação
+                        await AtualizarLivro(); 
                         break;
                     case 4:
                         Console.Clear();
-                        await ExcluirLivro(); // Aguarda a conclusão da operação
+                        await ExcluirLivro(); 
                         break;
                     case 0:
                         Console.WriteLine("\nSaindo do programa...");
@@ -289,12 +289,80 @@ namespace BibliotecaConsole
                 }
             }
             Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
-            Console.ReadKey(); // Aguarda o usuário pressionar uma tecla
+            Console.ReadKey();
         }
 
         private static async Task AtualizarLivro()
         {
             Console.WriteLine("=== ATUALIZAR LIVRO ===");
+
+            Console.Write("\nDigite o nome do livro que deseja atualizar: ");
+            string nomeLivroAtual = Console.ReadLine();
+
+            // Solicita os novos valores
+            Console.Write("\nDigite o novo nome do livro: ");
+            string novoNomeLivro = Console.ReadLine();
+
+            Console.Write("\nDigite o novo nome do autor: ");
+            string novoNomeAutor = Console.ReadLine();
+
+            Console.Write("\nDigite o novo ano de leitura: ");
+            if(!int.TryParse(Console.ReadLine(), out int novoAnoLeitura))
+            {
+                Console.WriteLine("\nAno inválido!");
+                await Task.Delay(1000);
+                return;
+            }
+
+            Console.Write("\nInforme a nova avaliação(0 a 5): ");
+            if(!int.TryParse(Console.ReadLine(), out int novaAvaliacao) || novaAvaliacao < 0 || novaAvaliacao > 5)
+            {
+                Console.WriteLine("\nFormato de avaliação inválido!");
+                await Task.Delay(1000);
+                return;
+            }
+
+            using (var connection = await ObterConexaoAsync())
+            {
+                try
+                {
+                    string query = "UPDATE Livro " +
+                        "SET nome_livro = @NovoNomeLivro, " +
+                        "    autor_livro = @NovoNomeAutor, " +
+                        "    ano_leitura = @NovoAnoLeitura, " +
+                        "    avaliacao_livro = @NovaAvaliacao " +
+                        "WHERE nome_livro = @NomeLivroAtual AND id_usuario = @UsuarioId";
+
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@NovoNomeLivro", novoNomeLivro);
+                        command.Parameters.AddWithValue("@NovoNomeAutor", novoNomeAutor);
+                        command.Parameters.AddWithValue("@NovoAnoLeitura", novoAnoLeitura);
+                        command.Parameters.AddWithValue("@NovaAvaliacao", novaAvaliacao);
+                        command.Parameters.AddWithValue("@NomeLivroAtual", nomeLivroAtual);
+                        command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+                        int result = await command.ExecuteNonQueryAsync();
+
+                        if (result > 0)
+                        {
+                            Console.WriteLine("\nLivro atualizado com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nLivro não encontrado ou você não tem permissão para atualizá-lo.");
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nErro ao atualizar livro: {ex.Message}");
+                }
+            }
+            await Task.Delay(1000);
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
         }
 
         private static async Task ExcluirLivro()
