@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,18 +35,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Livro.cs",
-              "DocumentMoniker": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs",
-              "RelativeDocumentMoniker": "Livro.cs",
-              "ToolTip": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs",
-              "RelativeToolTip": "Livro.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T18:00:14.884Z"
             },
             {
               "$type": "Document",
@@ -80,10 +68,22 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Program.cs*",
               "RelativeToolTip": "Program.cs*",
-              "ViewState": "AgIAAD0BAAAAAAAAAADwv0gBAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAGoBAAAAAAAAAADwv5MBAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-27T17:55:51.641Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Livro.cs",
+              "DocumentMoniker": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs",
+              "RelativeDocumentMoniker": "Livro.cs",
+              "ToolTip": "C:\\Users\\guilh\\OneDrive\\Documentos\\Biblioteca-Livros-Csharp\\BibliotecaConsole\\Livro.cs",
+              "RelativeToolTip": "Livro.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T18:00:14.884Z"
             }
           ]
         }

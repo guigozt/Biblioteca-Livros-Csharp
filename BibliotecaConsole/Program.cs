@@ -367,7 +367,40 @@ namespace BibliotecaConsole
 
         private static async Task ExcluirLivro()
         {
+            Console.Clear();
             Console.WriteLine("=== EXCLUIR LIVRO ===");
+
+            Console.Write("\nDigite o nome do livro que você deseja excluir: ");
+            string nomeLivro = Console.ReadLine();
+
+            using (var connection = await ObterConexaoAsync())
+            {
+                try
+                {
+                    string query = "DELETE FROM Livro WHERE nome_livro = @NomeLivro AND id_usuario = @UsuarioId";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@NomeLivro", nomeLivro);
+                        command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+                        int result = await command.ExecuteNonQueryAsync();
+
+                        if(result > 0)
+                        {
+                            Console.WriteLine("\nLivro excluído com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nLivro não encontrado ou você não tem permissão para excluí-lo!");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nErro em excluír o livro desejado: {ex.Message}");
+                }
+            }
+            await Task.Delay(1000);
         }
     }
 }
