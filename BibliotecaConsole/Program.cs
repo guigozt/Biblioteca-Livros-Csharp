@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 
 namespace BibliotecaConsole
 {
@@ -53,7 +54,7 @@ namespace BibliotecaConsole
             string emailLogin = Console.ReadLine();
 
             Console.Write("\nDigite sua senha: ");
-            string senhaLogin = Console.ReadLine();
+            string senhaLogin = LerSenhaComAsteriscos();
 
             int? usuarioIdTemp = await VerificarLoginAsync(emailLogin, senhaLogin);
 
@@ -100,17 +101,14 @@ namespace BibliotecaConsole
             Console.Clear();
             Console.WriteLine("=== CADASTRAR USUÁRIO ===");
 
-            Console.Write("\nDigite seu nome: ");
-            string nome = Console.ReadLine();
+            string nome = LerEntradaObrigatoria("\nDigite seu nome: ");
 
-            Console.Write("\nDigite seu email: ");
-            string email = Console.ReadLine();
+            string email = LerEntradaObrigatoria("\nDigite seu email: ");
 
-            Console.Write("\nDigite seu nickname (Apelido): ");
-            string nick = Console.ReadLine();
+            string nick = LerEntradaObrigatoria("\nDigite seu nickname (Apelido): ");
 
             Console.Write("\nDigite sua senha: ");
-            string senha = Console.ReadLine();
+            string senha = LerSenhaComAsteriscos();
 
             await InserirNovoUsuarioAsync(nome, email, nick, senha);
         }
@@ -260,7 +258,7 @@ namespace BibliotecaConsole
             {
                 try
                 {
-                    string query = "SELECT nome_livro, autor_livro, ano_leitura, avaliacao_livro FROM Livro WHERE id_usuario = @usuarioId";
+                    string query = "SELECT nome_livro, autor_livro, ano_leitura, avaliacao_livro FROM Livro WHERE id_usuario = @usuarioId ORDER BY ano_leitura ASC";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@UsuarioId", usuarioId);
@@ -296,31 +294,26 @@ namespace BibliotecaConsole
         {
             Console.WriteLine("=== ATUALIZAR LIVRO ===");
 
-            Console.Write("\nDigite o nome do livro que deseja atualizar: ");
-            string nomeLivroAtual = Console.ReadLine();
 
-            // Solicita os novos valores
-            Console.Write("\nDigite o novo nome do livro: ");
-            string novoNomeLivro = Console.ReadLine();
+            string nomeLivroAtual = LerEntradaObrigatoria("\nDigite o nome do livro que deseja atualizar: ");
 
-            Console.Write("\nDigite o novo nome do autor: ");
-            string novoNomeAutor = Console.ReadLine();
+            string novoNomeLivro = LerEntradaObrigatoria("\nDigite o novo nome do livro: ");
 
-            Console.Write("\nDigite o novo ano de leitura: ");
-            if(!int.TryParse(Console.ReadLine(), out int novoAnoLeitura))
+            string novoNomeAutor = LerEntradaObrigatoria("\nDigite o novo nome do autor: ");
+
+            int novoAnoLeitura;
+            do
             {
-                Console.WriteLine("\nAno inválido!");
-                await Task.Delay(1000);
-                return;
-            }
+                Console.Write("\nDigite o novo ano de leitura: ");
 
-            Console.Write("\nInforme a nova avaliação(0 a 5): ");
-            if(!int.TryParse(Console.ReadLine(), out int novaAvaliacao) || novaAvaliacao < 0 || novaAvaliacao > 5)
+            } while (!int.TryParse(Console.ReadLine(), out novoAnoLeitura));
+
+            int novaAvaliacao;
+            do
             {
-                Console.WriteLine("\nFormato de avaliação inválido!");
-                await Task.Delay(1000);
-                return;
-            }
+                Console.Write("\nInforme a nova avaliação (0 a 5): ");
+
+            }while (!int.TryParse(Console.ReadLine(),out novaAvaliacao) || novaAvaliacao < 0 || novaAvaliacao > 5);
 
             using (var connection = await ObterConexaoAsync())
             {
@@ -401,6 +394,46 @@ namespace BibliotecaConsole
                 }
             }
             await Task.Delay(1000);
+        }
+
+        private static string LerEntradaObrigatoria(string mensagem)
+        {
+            string entrada;
+            do
+            {
+                Console.Write(mensagem);
+                entrada = Console.ReadLine();
+
+            }
+            while (string.IsNullOrWhiteSpace(entrada));
+
+            return entrada;
+        }
+
+        private static string LerSenhaComAsteriscos()
+        {
+            string senha = string.Empty;
+            ConsoleKey key;
+
+            do
+            {
+                var tecla = Console.ReadKey(intercept: true);
+                key = tecla.Key;
+
+                if (key == ConsoleKey.Backspace && senha.Length > 0)
+                {
+                    senha = senha.Substring(0, senha.Length - 1);
+                    Console.Write("\b \b");
+                }
+                else if (!char.IsControl(tecla.KeyChar))
+                {
+                    senha += tecla.KeyChar;
+                    Console.Write("*");
+                }
+            } while (key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return senha;
         }
     }
 }
